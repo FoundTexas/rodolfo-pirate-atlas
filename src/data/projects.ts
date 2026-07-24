@@ -87,46 +87,91 @@ export const websites: ProjectWebsite[] = [
 export const projects: Project[] = [
   {
     slug: 'sas-consulting-work',
-    title: 'SAS Viya Consulting Work',
-    eyebrow: 'Technical consulting · SAS',
+    title: 'From Raw Data to Governed Analytics',
+    eyebrow: 'Technical consulting · SAS Viya',
     category: 'Consulting & Data',
     year: '2026—present',
-    summary: 'Consulting work connecting SAS Viya platform operations, governed analytics, data preparation and clear technical communication.',
-    challenge: 'Data and platform work only creates value when the environment is operable, the information is trustworthy and the result can be explained to the people using it.',
+    summary:
+      'A complete analytics route built around SAS Viya: turning inconsistent semi-structured data into validated analytical tables, governed CAS resources and stakeholder-ready visual stories.',
+
+    challenge:
+      'The challenge was not simply loading data. Different sources contained nested JSON structures, inconsistent fields and business rules that had to remain traceable from ingestion to presentation. At the same time, the platform needed practical access controls, reusable resources and an operating model that other users could understand.',
+
     approach: [
-      'Prepared and validated semi-structured data with SAS programming, regular expressions and repeatable quality checks.',
-      'Built analytical tables and prepared data for CAS and Visual Analytics storytelling.',
-      'Worked with users, groups, folders, permissions, CASLIBs and practical SAS Viya operating workflows.',
-      'Used web interfaces, command-line concepts, REST APIs and automation-oriented tooling to make administration more repeatable.',
-      'Translated implementation details into presentations, demos and stakeholder-ready documentation.'
+      'Reverse-engineered semi-structured JSON sources and designed extraction rules for nested business entities.',
+      'Used SAS programming and regular expressions to standardize fields, normalize records and preserve relationships across analytical tables.',
+      'Created layered validation checks for required values, formats, duplicates, referential consistency and transformation results.',
+      'Prepared governed data resources for CAS and Visual Analytics through CASLIBs, permissions, folders and reusable platform workflows.',
+      'Connected the technical implementation to a geographic research narrative through dashboards, demos and presentation-ready documentation.',
+      'Worked across the platform lifecycle, including deployment concepts, identity integration, storage, administration and post-installation validation.'
     ],
-    result: 'A consulting practice spanning the route from platform setup and governance to trustworthy analysis and understandable delivery.',
-    stack: ['SAS Viya', 'SAS Programming', 'CAS', 'Visual Analytics', 'REST APIs', 'Data Validation'],
+
+    result:
+      'Produced a traceable route from irregular source data to governed analytics, combining platform administration, data engineering, validation and visual communication in one case study.',
+
+    stack: [
+      'SAS Viya',
+      'SAS Programming',
+      'CAS',
+      'Visual Analytics',
+      'Regular Expressions',
+      'REST APIs',
+      'Data Quality',
+      'Platform Administration'
+    ],
+
     color: '#49d9c3',
     visual: 'data',
     featured: true,
-    confidentiality: 'This case study combines portfolio exercises and generalized consulting capabilities. It contains no confidential customer configuration or proprietary data.'
+
+    confidentiality:
+      'The implementation is presented through anonymized architecture, synthetic data and generalized platform workflows. No customer information or proprietary configuration is included.'
   },
   {
     slug: 'gbm-cloud-backend',
-    title: 'Cloud-Native Financial Backend',
-    eyebrow: 'Professional experience · GBM',
+    title: 'Engineering Below the Financial Interface',
+    eyebrow: 'Cloud-native backend · GBM',
     category: 'Cloud & Backend',
     year: '2024—2026',
-    summary: 'Backend services for financial modules built with serverless AWS components, .NET APIs, Python and DynamoDB.',
-    challenge: 'Business-critical modules required maintainable services, dependable data access and better operational visibility across cloud processes.',
+    summary:
+      'Cloud-native backend services supporting financial product modules through serverless processing, maintainable APIs, dependable data access and operational visibility.',
+
+    challenge:
+      'Financial functionality depends on systems users rarely see. Services needed to process business-critical operations reliably, integrate with distributed cloud resources and remain diagnosable when an execution failed somewhere between an API request, a serverless function and its data layer.',
+
     approach: [
-      'Built AWS Lambda functions in Python and C# and implemented REST endpoints in .NET.',
-      'Integrated DynamoDB through custom data-access components and maintainable abstractions.',
-      'Deployed serverless services and required AWS resources using Infrastructure as Code.',
-      'Created CloudWatch dashboards and used logs to improve diagnosis and observability.'
+      'Developed AWS Lambda functions in Python and C# for event-driven and request-based backend workflows.',
+      'Built and maintained REST APIs with .NET 8, separating business logic, application services and cloud integrations.',
+      'Created reusable DynamoDB access components to make queries, writes and domain mappings easier to maintain.',
+      'Defined and deployed cloud resources through Infrastructure as Code to reduce manual configuration and improve environment consistency.',
+      'Worked with containerized services and delivery workflows involving ECS, ECR and automated pipelines.',
+      'Used structured logs, CloudWatch dashboards and execution traces to investigate failures across distributed services.',
+      'Improved resilience through validation, controlled error handling and clearer operational signals.'
     ],
-    result: 'Improved API reliability, data handling and visibility across backend processes while working within a regulated financial environment.',
-    stack: ['AWS Lambda', '.NET', 'C#', 'Python', 'DynamoDB', 'CloudWatch', 'IaC'],
+
+    result:
+      'Strengthened the invisible layer behind financial experiences: services became easier to evolve, cloud resources more repeatable to deploy and production behavior easier to diagnose.',
+
+    stack: [
+      'AWS Lambda',
+      '.NET 8',
+      'C#',
+      'Python',
+      'DynamoDB',
+      'API Gateway',
+      'ECS',
+      'ECR',
+      'CloudWatch',
+      'Infrastructure as Code',
+      'CI/CD'
+    ],
+
     color: '#ffb44a',
     visual: 'cloud',
     featured: true,
-    confidentiality: 'Architecture and wording are intentionally generalized. No proprietary code, metrics or internal identifiers are shown.'
+
+    confidentiality:
+      'The case study focuses on engineering responsibilities and generalized architectural patterns. It excludes proprietary code, financial data, internal identifiers and confidential metrics.'
   },
   {
     slug: 'web-applications',

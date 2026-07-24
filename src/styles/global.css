@@ -390,6 +390,7 @@ button, input, textarea { font: inherit; }
   background: rgba(255,255,255,.04);
   font-family: var(--font-mono);
   font-size: .62rem;
+  color: white;
 }
 .atlas-help-grid b { font-size: .62rem; font-weight: 500; color: var(--ink-muted); }
 
