@@ -85,6 +85,29 @@ export const websites: ProjectWebsite[] = [
 ];
 
 export const projects: Project[] = [
+
+    {
+    slug: 'web-applications',
+    title: 'Web Applications & Client Sites',
+    eyebrow: 'Public products · client delivery',
+    category: 'Digital Products',
+    year: '2023—present',
+    summary: 'Five public websites spanning independent products, catalogs, e-commerce, brand storytelling and software-studio delivery.',
+    challenge: 'Each business needed a different path from attention to action: exploring a catalog, understanding a product, customizing an idea, purchasing or starting a conversation.',
+    approach: [
+      'Designed responsive information structures around the actual commercial journey of each project.',
+      'Connected brand direction with usable catalogs, product content and clear calls to action.',
+      'Adapted implementation choices to independent products, small businesses and client-delivery constraints.',
+      'Deployed and iterated public experiences that can be opened and evaluated directly.'
+    ],
+    result: 'A compact collection of live web work showing product thinking, front-end delivery and the ability to adapt technology to different businesses.',
+    stack: ['Astro', 'JavaScript', 'Symfony', 'React', 'Angular', 'Responsive UX', 'E-commerce'],
+    color: '#f1d36d',
+    featured: true,
+    websites,
+    links: websites.map((site) => ({ label: site.title, url: site.url, type: 'live' as const }))
+  },
+  
   {
     slug: 'sas-consulting-work',
     title: 'From Raw Data to Governed Analytics',
@@ -173,27 +196,7 @@ export const projects: Project[] = [
     confidentiality:
       'The case study focuses on engineering responsibilities and generalized architectural patterns. It excludes proprietary code, financial data, internal identifiers and confidential metrics.'
   },
-  {
-    slug: 'web-applications',
-    title: 'Web Applications & Client Sites',
-    eyebrow: 'Public products · client delivery',
-    category: 'Digital Products',
-    year: '2023—present',
-    summary: 'Five public websites spanning independent products, catalogs, e-commerce, brand storytelling and software-studio delivery.',
-    challenge: 'Each business needed a different path from attention to action: exploring a catalog, understanding a product, customizing an idea, purchasing or starting a conversation.',
-    approach: [
-      'Designed responsive information structures around the actual commercial journey of each project.',
-      'Connected brand direction with usable catalogs, product content and clear calls to action.',
-      'Adapted implementation choices to independent products, small businesses and client-delivery constraints.',
-      'Deployed and iterated public experiences that can be opened and evaluated directly.'
-    ],
-    result: 'A compact collection of live web work showing product thinking, front-end delivery and the ability to adapt technology to different businesses.',
-    stack: ['Astro', 'JavaScript', 'Symfony', 'React', 'Angular', 'Responsive UX', 'E-commerce'],
-    color: '#f1d36d',
-    featured: true,
-    websites,
-    links: websites.map((site) => ({ label: site.title, url: site.url, type: 'live' as const }))
-  },
+
   {
     slug: 'foundtexas-interactive-worlds',
     title: 'FoundTexas Interactive Worlds',
