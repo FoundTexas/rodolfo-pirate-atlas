@@ -16,5 +16,8 @@
     "bootstrap": "latest",
     "three": "latest",
     "typescript": "latest"
+  },
+  "devDependencies": {
+    "@types/three": "^0.185.1"
   }
 }

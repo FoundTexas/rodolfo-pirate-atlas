@@ -16,7 +16,7 @@ const {
 } = Astro.props;
 
 const screenshot = url
-  ? `https://image.thum.io/get/width/1100/crop/720/noanimate/${url}`
+  ? `https://image.thum.io/get/width/1100/crop/720/maxAge/24/allowJPG/noanimate/${url}`
   : undefined;
 
 const domain = url
@@ -49,7 +49,7 @@ const domain = url
         loading="lazy"
         decoding="async"
         referrerpolicy="no-referrer"
-        data-project-screenshot
+        data-generated-preview
       />
     ) : null
   }
@@ -141,38 +141,34 @@ const domain = url
 </div>
 
 <script>
-  function initializeProjectScreenshots(): void {
-    const screenshots = document.querySelectorAll<HTMLImageElement>(
-      '[data-project-screenshot]'
+  function initializeGeneratedProjectPreviews(): void {
+    const images = document.querySelectorAll<HTMLImageElement>(
+      '.project-preview [data-generated-preview]'
     );
 
-    screenshots.forEach((image) => {
-      if (image.dataset.fallbackInitialized === 'true') {
+    images.forEach((image) => {
+      if (image.dataset.previewInitialized === 'true') {
         return;
       }
 
-      image.dataset.fallbackInitialized = 'true';
+      image.dataset.previewInitialized = 'true';
 
-      image.addEventListener(
-        'error',
-        () => {
-          image.hidden = true;
-          image.parentElement?.classList.add('preview-failed');
-        },
-        { once: true }
-      );
-
-      // Cubre fallos ocurridos antes de registrar el listener.
-      if (image.complete && image.naturalWidth === 0) {
+      const showFallback = (): void => {
         image.hidden = true;
-        image.parentElement?.classList.add('preview-failed');
+        image.closest('.project-preview')?.classList.add('preview-failed');
+      };
+
+      image.addEventListener('error', showFallback, { once: true });
+
+      if (image.complete && image.naturalWidth === 0) {
+        showFallback();
       }
     });
   }
 
-  initializeProjectScreenshots();
+  initializeGeneratedProjectPreviews();
   document.addEventListener(
     'astro:page-load',
-    initializeProjectScreenshots
+    initializeGeneratedProjectPreviews
   );
 </script>
