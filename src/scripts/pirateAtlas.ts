@@ -104,16 +104,34 @@ function initAtlas(shell: HTMLElement, canvas: HTMLCanvasElement) {
   const interactiveMeshes: THREE.Object3D[] = [];
   islandData.forEach((data, index) => {
     const island = createIsland(data.slug, data.color, data.scale, index);
-    island.position.set(...data.position);
+    island.position.set(
+      data.position[0],
+      data.position[1],
+      data.position[2]
+    );
     island.userData.restScale = data.scale;
     world.add(island);
     islands.set(data.slug, island);
-    island.traverse((child) => {
+    island.traverse((child: THREE.Object3D) => {
       child.userData.slug = data.slug;
       interactiveMeshes.push(child);
     });
     const next = islandData[(index + 1) % islandData.length];
-    routes.add(createRoute(new THREE.Vector3(...data.position), new THREE.Vector3(...next.position), data.color));
+    routes.add(
+      createRoute(
+        new THREE.Vector3(
+          data.position[0],
+          data.position[1],
+          data.position[2]
+        ),
+        new THREE.Vector3(
+          next.position[0],
+          next.position[1],
+          next.position[2]
+        ),
+        data.color
+      )
+    );
   });
 
   const ship = createPandaShip();
@@ -124,7 +142,8 @@ function initAtlas(shell: HTMLElement, canvas: HTMLCanvasElement) {
   const raycaster = new THREE.Raycaster();
   const pointer = new THREE.Vector2(0, 0);
   const pointerSmooth = new THREE.Vector2(0, 0);
-  const clock = new THREE.Clock();
+  let previousFrameTime = performance.now();
+  let elapsed = 0;
   const cameraTarget = new THREE.Vector3();
   const desiredCamera = new THREE.Vector3();
   const keys = new Set<string>();
@@ -147,7 +166,6 @@ function initAtlas(shell: HTMLElement, canvas: HTMLCanvasElement) {
   let hoveredSlug = '';
   let scrollProgress = 0;
   let boatHeading = Math.PI;
-  let elapsed = 0;
   let cameraDistanceOffset = 0;
   let currentSpeed = 0;
   let joystickPointerId: number | null = null;
@@ -555,7 +573,9 @@ function initAtlas(shell: HTMLElement, canvas: HTMLCanvasElement) {
   }
 
   function animate() {
-    const delta = Math.min(clock.getDelta(), 0.05);
+    const currentFrameTime = performance.now();
+    const delta = Math.min((currentFrameTime - previousFrameTime) / 1000, 0.05);
+    previousFrameTime = currentFrameTime;
     elapsed += delta;
     updateSea(elapsed);
     updateShip(delta, elapsed);
@@ -572,9 +592,20 @@ function initAtlas(shell: HTMLElement, canvas: HTMLCanvasElement) {
       const beacon = island.getObjectByName('beacon');
       if (beacon) beacon.rotation.y += delta * 0.7;
     });
-    routes.children.forEach((route, index) => {
-      const material = (route as THREE.Line).material as THREE.LineDashedMaterial;
-      material.dashOffset = -elapsed * 0.18 - index * 0.08;
+    routes.children.forEach((route: THREE.Object3D, index: number) => {
+      const line = route as THREE.Line<
+        THREE.BufferGeometry,
+        THREE.LineDashedMaterial
+      >;
+      const material = line.material;
+
+      // LineDashedMaterial does not expose dashOffset.
+      // Animate the route with a subtle pulse instead.
+      material.opacity =
+        0.48 + Math.sin(elapsed * 1.7 + index * 0.8) * 0.10;
+      material.dashSize =
+        0.22 + Math.sin(elapsed * 1.15 + index * 0.55) * 0.025;
+      material.needsUpdate = true;
     });
     updateLabels();
     renderer.render(scene, camera);
