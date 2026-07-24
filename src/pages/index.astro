@@ -1,0 +1,264 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import PirateAtlas from '../components/PirateAtlas.astro';
+import ProjectPreview from '../components/ProjectPreview.astro';
+import WebsiteShowcase from '../components/WebsiteShowcase.astro';
+import { projects, featuredProjects, categoryCopy } from '../data/projects';
+
+const categories = Object.entries(categoryCopy);
+const experiences = [
+  {
+    period: '2026—Now',
+    role: 'Associate Technical Consultant',
+    company: 'SAS',
+    description: 'Working across SAS Viya, data preparation, platform operations, analytics, automation and technical communication.'
+  },
+  {
+    period: '2024—2026',
+    role: 'Backend Developer',
+    company: 'GBM',
+    description: 'Built cloud-native financial services with AWS Lambda, .NET, Python, DynamoDB, CloudWatch and Infrastructure as Code.'
+  },
+  {
+    period: '2023—2024',
+    role: 'Full-Stack Developer',
+    company: 'Masoftcode',
+    description: 'Delivered client applications with Symfony, Twig, Angular and React, supported by Docker, Google Cloud and CI/CD.'
+  },
+  {
+    period: '2022—2023',
+    role: 'Game Developer',
+    company: 'Word Games Studio',
+    description: 'Created Unity gameplay systems and improved visuals and performance with URP, shaders and low-end device optimization.'
+  }
+];
+---
+<BaseLayout>
+  <SiteHeader />
+  <main id="main-content">
+    <section class="hero" aria-labelledby="hero-title">
+      <PirateAtlas />
+      <div class="hero-content container px-4">
+        <div class="hero-captain d-inline-flex align-items-center gap-3 mb-4">
+          <p class="kicker mb-0"><span>Technical Consultant</span><span>Software Engineer</span></p>
+        </div>
+        <div class="bg-dark bg-opacity-75 rounded-4 p-3 p-md-4 p-lg-5 shadow-lg">
+          <h1 id="hero-title">I build systems people can <em>use, understand</em> and sometimes <em>play.</em></h1>
+          <p class="hero-intro">Data platforms, cloud-native backends, web products and interactive worlds—charted from Mexico City.</p>
+          <div class="hero-actions d-flex flex-wrap gap-2 gap-md-3 mt-4">
+            <a class="btn btn-primary btn-lg" href="#work">View selected work</a>
+            <button class="btn btn-outline-light btn-lg hero-explore-trigger" type="button" data-open-atlas>Explore the map</button>
+          </div>
+          <div class="hero-proof d-flex flex-wrap gap-2 mt-4" aria-label="Professional focus">
+            <span class="badge rounded-pill">SAS Viya</span>
+            <span class="badge rounded-pill">AWS + .NET</span>
+            <span class="badge rounded-pill">Web products</span>
+            <span class="badge rounded-pill">Unity + C#</span>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <section id="manifesto" class="manifesto container-xxl px-4 section-pad">
+      <p class="section-index">00 / Manifesto</p>
+      <div class="row g-4 g-lg-5 align-items-start manifesto-grid">
+        <div class="col-lg-6"><h2>Engineering below the waterline. Experience above it.</h2></div>
+        <div class="col-lg-6">
+          <p>I move between infrastructure, data and the interface a person finally touches. That range helps me translate complex requirements into software that is maintainable, understandable and useful.</p>
+          <p>Every island represents a different kind of system. The panda captain is the curious builder navigating between them.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="seas container-xxl px-4 pb-5" aria-labelledby="seas-title">
+      <div class="section-heading mb-4">
+        <p class="section-index">01 / Territories</p>
+        <h2 id="seas-title">One career, four connected areas.</h2>
+      </div>
+      <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-3 seas-grid-bootstrap">
+        {categories.map(([name, copy]) => (
+          <div class="col">
+            <article class="sea-card card h-100 p-4 rounded-4 shadow-sm">
+              <span class="sea-number">{copy.number}</span>
+              <h3 class="h5 mt-4">{name}</h3>
+              <p class="mb-0">{copy.subtitle}</p>
+            </article>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section id="work" class="work section-pad" aria-labelledby="work-title">
+      <div class="container-xxl px-4">
+        <div class="row g-4 align-items-end mb-5 section-heading split-heading">
+          <div class="col-lg-7">
+            <p class="section-index">02 / Selected work</p>
+            <h2 id="work-title">Projects and case studies</h2>
+          </div>
+          <div class="col-lg-5">
+            <p class="mb-0">Live work opens directly from its preview. Private systems are presented as concise case studies.</p>
+          </div>
+        </div>
+        <div class="row g-4">
+          {featuredProjects.map((project, index) => {
+            const primaryLink = project.previewUrl ?? `/projects/${project.slug}/`;
+            const opensNewTab = Boolean(project.previewUrl);
+            return (
+              <div class="col-12 col-xl-6">
+                <article class="project-card card h-100 rounded-4 overflow-hidden shadow-lg" style={`--accent:${project.color}`}>
+                  {project.websites ? (
+                    <div class="p-3 p-lg-4 pb-0">
+                      <WebsiteShowcase websites={project.websites} compact />
+                    </div>
+                  ) : (
+                    <a
+                      class="project-preview-link"
+                      href={primaryLink}
+                      target={opensNewTab ? '_blank' : undefined}
+                      rel={opensNewTab ? 'noreferrer' : undefined}
+                      aria-label={opensNewTab ? `Open ${project.title}` : `Read the ${project.title} case study`}
+                    >
+                      <ProjectPreview title={project.title} url={project.previewUrl} color={project.color} index={index} visual={project.visual} />
+                    </a>
+                  )}
+                  <div class="project-card-copy card-body p-4 p-lg-5">
+                    <div class="project-meta d-flex justify-content-between gap-3"><span>{project.category}</span><span>{project.year}</span></div>
+                    <h3 class="card-title"><a href={`/projects/${project.slug}/`}>{project.title}</a></h3>
+                    <p class="card-text">{project.summary}</p>
+                    <div class="project-stack d-flex flex-wrap gap-2 mt-4">
+                      {project.stack.slice(0, 4).map((item) => <span class="badge rounded-pill">{item}</span>)}
+                    </div>
+                    <a class="project-open mt-auto pt-4" href={`/projects/${project.slug}/`}>View case study <b>↗</b></a>
+                  </div>
+                </article>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+
+    <section id="experience" class="experience section-pad container-xxl px-4" aria-labelledby="experience-title">
+      <div class="row g-4 align-items-end mb-5 section-heading split-heading">
+        <div class="col-lg-7">
+          <p class="section-index">03 / Voyage</p>
+          <h2 id="experience-title">Experience</h2>
+        </div>
+        <div class="col-lg-5"><p class="mb-0">From interactive software to full-stack delivery, cloud-native finance and data-platform consulting.</p></div>
+      </div>
+      <div class="list-group list-group-flush timeline">
+        {experiences.map((experience, index) => (
+          <article class="list-group-item timeline-item py-4 px-0">
+            <div class="row g-3 g-lg-4 align-items-start w-100">
+              <div class="col-2 col-lg-1 timeline-marker"><span>{String(index + 1).padStart(2, '0')}</span></div>
+              <p class="col-10 col-lg-2 timeline-period mb-0">{experience.period}</p>
+              <div class="col-12 col-lg-3 timeline-role">
+                <h3 class="h5 mb-1">{experience.role}</h3>
+                <p>{experience.company}</p>
+              </div>
+              <p class="col-12 col-lg-6 timeline-description mb-0">{experience.description}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="interactive-band section-pad" aria-labelledby="interactive-title">
+      <div class="container-xxl px-4">
+        <div class="row g-5 align-items-center interactive-grid">
+          <div class="col-lg-6">
+            <p class="section-index">04 / FoundTexas</p>
+            <h2 id="interactive-title">Not every system should feel like work.</h2>
+            <p>FoundTexas is my public harbor for playable prototypes, game-jam collaborations and experiments in mechanics, narrative and performance.</p>
+            <a class="btn btn-primary mt-3" href="https://foundtexas.itch.io/" target="_blank" rel="noreferrer">Open FoundTexas ↗</a>
+          </div>
+          <div class="col-lg-6">
+            <div class="game-window" aria-hidden="true">
+              <div class="game-window-bar"><i></i><i></i><i></i><span>foundtexas.exe</span></div>
+              <div class="pixel-sea">
+                <div class="pixel-moon"></div>
+                <div class="pixel-island"></div>
+                <div class="pixel-boat"><img src="/profile-panda-transparent.svg" alt="" /></div>
+                <div class="pixel-stars">+ · ✦ · + · ✧ · +</div>
+              </div>
+              <p>PRESS START TO EXPLORE</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="about section-pad container-xxl px-4" aria-labelledby="about-title">
+      <div class="about-card card border-0 rounded-4 shadow-lg">
+        <div class="card-body p-4 p-md-5 p-xl-6">
+          <div class="row g-5 align-items-center">
+            <div class="col-lg-6 about-copy">
+              <div class="about-avatar d-flex align-items-center gap-3 mb-4">
+                <img src="/profile-photo.png" alt="Pixel-art panda avatar for Rodolfo León" width="150" height="150" />
+                <span>RODOLFO · FOUNDTEXAS</span>
+              </div>
+              <p class="section-index">05 / Captain's log</p>
+              <h2 id="about-title">Curiosity with structure.</h2>
+              <p>I am Rodolfo León, a software engineer and technical consultant based in Mexico City. I naturally look for patterns, architecture and the human experience connecting the pieces.</p>
+              <p>My work spans SAS Viya, backend services, cloud infrastructure, public websites, independent products and games. The common thread is turning ambiguity into a system people can navigate.</p>
+            </div>
+            <div class="col-lg-6 skills-chart list-group list-group-flush" aria-label="Core capabilities">
+              <div class="list-group-item"><span>Consulting & data</span><b>SAS Viya · CAS · Analytics</b></div>
+              <div class="list-group-item"><span>Backend & cloud</span><b>.NET · Python · AWS · APIs</b></div>
+              <div class="list-group-item"><span>Product delivery</span><b>Astro · React · Symfony · UX</b></div>
+              <div class="list-group-item"><span>Interactive software</span><b>Unity · C# · URP · Shaders</b></div>
+              <div class="list-group-item"><span>Languages</span><b>Spanish · English B2 · French A2</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="all-work container-xxl px-4 section-pad" aria-labelledby="archive-title">
+      <div class="section-heading mb-4">
+        <p class="section-index">06 / Archive</p>
+        <h2 id="archive-title">All charted work</h2>
+      </div>
+      <div class="archive-list list-group list-group-flush">
+        {projects.map((project) => (
+          <a class="list-group-item list-group-item-action" href={`/projects/${project.slug}/`}>
+            <span>{project.year}</span>
+            <strong>{project.title}</strong>
+            <em>{project.category}</em>
+            <b>↗</b>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section id="contact" class="contact section-pad">
+      <div class="container-xxl px-4">
+        <div class="row g-5 align-items-start contact-grid">
+          <div class="col-lg-6 d-flex gap-4 align-items-start">
+            <img class="contact-panda" src="/profile-panda-transparent.svg" alt="" width="100" height="100" />
+            <div>
+              <p class="section-index">07 / Send a signal</p>
+              <h2>Have a complex map?<br />Let’s make it navigable.</h2>
+            </div>
+          </div>
+          <div class="col-lg-6 contact-links list-group list-group-flush">
+            <a class="list-group-item list-group-item-action" href="mailto:rolega01@gmail.com"><span>Email</span><strong>rolega01@gmail.com</strong><b>↗</b></a>
+            <a class="list-group-item list-group-item-action" href="tel:+525549138324"><span>Phone</span><strong>+52 55 4913 8324</strong><b>↗</b></a>
+            <a class="list-group-item list-group-item-action" href="https://foundtexas.itch.io/" target="_blank" rel="noreferrer"><span>Games</span><strong>foundtexas.itch.io</strong><b>↗</b></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer container-xxl px-4 d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+    <p class="d-flex align-items-center gap-2 mb-0"><img src="/profile-panda-transparent.svg" alt="" width="34" height="34" /> Designed and built by Rodolfo León with Astro, Bootstrap, Three.js and a small panda captain.</p>
+    <p class="mb-0">© {new Date().getFullYear()} · Mexico City</p>
+  </footer>
+  <script is:inline>
+    document.querySelector('[data-open-atlas]')?.addEventListener('click', () => {
+      document.querySelector('#atlas-play')?.click();
+    });
+  </script>
+</BaseLayout>

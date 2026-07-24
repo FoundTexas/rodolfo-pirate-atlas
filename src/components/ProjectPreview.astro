@@ -1,0 +1,70 @@
+---
+interface Props {
+  title: string;
+  url?: string;
+  color: string;
+  index: number;
+  visual?: 'data' | 'cloud' | 'default';
+}
+
+const { title, url, color, index, visual = 'default' } = Astro.props;
+const screenshot = url
+  ? `https://image.thum.io/get/width/1100/crop/720/noanimate/${url}`
+  : undefined;
+const domain = url ? new URL(url).hostname.replace(/^www\./, '') : 'conceptual case-study view';
+---
+<div class:list={['project-preview', { 'has-live-preview': Boolean(screenshot) }]} style={`--preview-accent:${color}`}>
+  <div class="project-browser-bar" aria-hidden="true">
+    <span><i></i><i></i><i></i></span>
+    <small>{domain}</small>
+  </div>
+  {screenshot ? (
+    <img
+      src={screenshot}
+      alt={`Preview of ${title}`}
+      loading="lazy"
+      decoding="async"
+      referrerpolicy="no-referrer"
+      onerror="this.hidden=true; this.parentElement?.classList.add('preview-failed')"
+    />
+  ) : null}
+
+  <div class:list={['project-preview-fallback', `preview-${visual}`]} aria-hidden="true">
+    {visual === 'data' ? (
+      <div class="concept-board concept-data">
+        <div class="concept-heading"><span>DATA ROUTE</span><b>SAS VIYA</b></div>
+        <div class="data-flow">
+          <span>RAW</span><i>→</i><span>VALIDATE</span><i>→</i><span>CAS</span><i>→</i><span>VISUALIZE</span>
+        </div>
+        <div class="data-dashboard">
+          <div class="data-bars"><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="data-map"><b></b><b></b><b></b><b></b></div>
+        </div>
+      </div>
+    ) : visual === 'cloud' ? (
+      <div class="concept-board concept-cloud">
+        <div class="concept-heading"><span>SERVICE MAP</span><b>CLOUD BACKEND</b></div>
+        <div class="cloud-diagram">
+          <span class="cloud-node node-client">CLIENT</span>
+          <span class="cloud-line line-one"></span>
+          <span class="cloud-node node-api">API</span>
+          <span class="cloud-line line-two"></span>
+          <span class="cloud-node node-lambda">λ</span>
+          <span class="cloud-line line-three"></span>
+          <span class="cloud-node node-data">DB</span>
+          <span class="cloud-line line-four"></span>
+          <span class="cloud-node node-observe">LOGS</span>
+        </div>
+        <div class="cloud-status"><i></i><span>SERVERLESS SERVICES · OBSERVABILITY · IaC</span></div>
+      </div>
+    ) : (
+      <>
+        <span class="preview-ring preview-ring-one"></span>
+        <span class="preview-ring preview-ring-two"></span>
+        <span class="preview-island"></span>
+        <span class="preview-route"></span>
+      </>
+    )}
+  </div>
+  <b>{String(index + 1).padStart(2, '0')}</b>
+</div>

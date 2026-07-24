@@ -1,0 +1,48 @@
+---
+import type { ProjectWebsite } from '../data/projects';
+
+interface Props {
+  websites: ProjectWebsite[];
+  compact?: boolean;
+}
+
+const { websites, compact = false } = Astro.props;
+const visibleSites = compact ? websites.slice(0, 4) : websites;
+const screenshotFor = (url: string) => `https://image.thum.io/get/width/1000/crop/680/noanimate/${url}`;
+---
+<div class:list={['row g-3 website-showcase', { 'website-showcase-compact': compact }]}>
+  {visibleSites.map((site) => (
+    <div class={compact ? 'col-6' : 'col-12 col-md-6 col-xl-4'}>
+      <article class="card website-card h-100 overflow-hidden rounded-4 shadow-sm" style={`--site-accent:${site.color}`}>
+        <a class="website-preview ratio ratio-16x9" href={site.url} target="_blank" rel="noreferrer" aria-label={`Open ${site.title}`}>
+          <img
+            src={screenshotFor(site.url)}
+            alt={`Preview of ${site.title}`}
+            loading="lazy"
+            decoding="async"
+            referrerpolicy="no-referrer"
+            onerror="this.hidden=true; this.parentElement?.classList.add('preview-failed')"
+          />
+          <span class="website-preview-fallback" aria-hidden="true">
+            <img src="/profile-panda-transparent.svg" alt="" />
+          </span>
+          {compact && <strong class="website-compact-label">{site.title}</strong>}
+        </a>
+        {!compact && (
+          <div class="card-body d-flex flex-column p-4">
+            <span class="badge rounded-pill align-self-start mb-3">{site.label}</span>
+            <h3 class="h5 card-title mb-2">{site.title}</h3>
+            <p class="card-text text-secondary-emphasis">{site.summary}</p>
+            <p class="website-contribution small mt-2 mb-3"><strong>My contribution:</strong> {site.contribution}</p>
+            <div class="d-flex flex-wrap gap-2 mb-4">
+              {site.stack.map((item) => <span class="badge text-bg-dark border">{item}</span>)}
+            </div>
+            <a class="stretched-link website-link mt-auto" href={site.url} target="_blank" rel="noreferrer">
+              Visit {site.title} <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        )}
+      </article>
+    </div>
+  ))}
+</div>

@@ -1,0 +1,20 @@
+{
+  "name": "rodolfo-pirate-atlas",
+  "type": "module",
+  "version": "0.7.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "latest",
+    "astro": "latest",
+    "bootstrap": "latest",
+    "three": "latest",
+    "typescript": "latest"
+  }
+}

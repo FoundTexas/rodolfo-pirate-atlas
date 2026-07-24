@@ -1,0 +1,47 @@
+---
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  title = 'Rodolfo León — Technical Consultant & Software Engineer',
+  description = 'Data platforms, cloud systems, digital products and interactive worlds.',
+  image = '/og-card.svg'
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
+---
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#07141c" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content={new URL(image, Astro.site ?? Astro.url.origin)} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <slot />
+    <script>
+      import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+    </script>
+    <script is:inline>
+      const root = document.documentElement;
+      const onScroll = () => root.style.setProperty('--page-scroll', String(window.scrollY));
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+    </script>
+  </body>
+</html>

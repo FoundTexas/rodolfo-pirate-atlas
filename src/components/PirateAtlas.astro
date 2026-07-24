@@ -1,0 +1,74 @@
+---
+import { featuredProjects } from '../data/projects';
+---
+<div class="atlas-shell" data-atlas-shell>
+  <canvas class="atlas-canvas" data-atlas-canvas tabindex="0" aria-label="Interactive three-dimensional project archipelago. Enter explore mode to steer the panda captain."></canvas>
+  <div class="atlas-fallback" data-atlas-fallback hidden>
+    <span>✦</span>
+    <p>The interactive sea could not be rendered, but every project remains available below.</p>
+  </div>
+
+  <div class="atlas-grid" aria-hidden="true"></div>
+  <div class="atlas-vignette" aria-hidden="true"></div>
+
+  <div class="atlas-labels">
+    {featuredProjects.map((project) => (
+      <a class="atlas-label" href={`/projects/${project.slug}/`} data-project-label={project.slug}>
+        <span class="atlas-label-dot" style={`--project-color:${project.color}`}></span>
+        <span>{project.title}</span>
+      </a>
+    ))}
+  </div>
+
+  <div class="atlas-hud">
+    <div class="atlas-coordinates" aria-hidden="true">
+      <span>THE BUILDER'S ATLAS</span>
+      <span>19.4326° N · 99.1332° W</span>
+    </div>
+
+    <button id="atlas-fullscreen" class="atlas-icon-button atlas-fullscreen-button" type="button" aria-label="Open atlas in fullscreen" title="Fullscreen">⛶</button>
+
+    <div class="atlas-controls">
+      <button id="atlas-play" class="atlas-button" type="button" aria-pressed="false">
+        <span class="atlas-button-icon" aria-hidden="true">◈</span>
+        <span data-play-label>Explore the sea</span>
+      </button>
+    </div>
+
+    <p id="atlas-status" class="atlas-status" aria-live="polite">Select an island, or open explore mode to steer the panda.</p>
+
+    <div class="atlas-help" id="atlas-help" hidden>
+      <button id="atlas-help-close" type="button" aria-label="Close controls guide">×</button>
+      <p class="atlas-help-kicker">Captain controls</p>
+      <strong>Move like a small boat, not a car.</strong>
+      <div class="atlas-help-grid">
+        <span><kbd>W</kbd><kbd>↑</kbd><b>Advance</b></span>
+        <span><kbd>S</kbd><kbd>↓</kbd><b>Reverse</b></span>
+        <span><kbd>A</kbd><kbd>←</kbd><b>Turn left</b></span>
+        <span><kbd>D</kbd><kbd>→</kbd><b>Turn right</b></span>
+      </div>
+      <p>Use the joystick on touch devices. Sail into an island—or select its label—to open the case study. Use the mouse wheel to adjust the camera.</p>
+    </div>
+
+    <div class="atlas-docking-notice" id="atlas-docking-notice" hidden aria-live="assertive">
+      <span>Docking at</span>
+      <strong data-docking-title></strong>
+      <small>Opening case study…</small>
+    </div>
+
+    <div class="atlas-speed" aria-hidden="true">
+      <span>THROTTLE</span>
+      <b data-atlas-speed>00</b>
+    </div>
+
+    <div class="atlas-joystick" data-atlas-joystick aria-label="Virtual joystick for the panda ship" aria-hidden="true">
+      <div class="atlas-joystick-base" data-joystick-base>
+        <span class="atlas-joystick-knob" data-joystick-knob></span>
+      </div>
+      <small>Joystick · drag to sail</small>
+    </div>
+  </div>
+</div>
+<script>
+  import '../scripts/pirateAtlas';
+</script>
